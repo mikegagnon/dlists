@@ -383,3 +383,50 @@ assert(newHead == undefined);
 
 The algorithmic performance of `removeFirst(...)` is *O(1)*.
 
+## <a name="lec8">Lecture 8. `removeLast(...)`</a>
+
+```js
+class DNode {
+    
+    ...
+
+    // Removes the last node from the list.
+    //
+    // this node __must__ be the last node in the list
+    //
+    // Returns [v, last], where v is the value of the removed node, and
+    // last is a reference for the new last node
+    removeLast() {
+        if (this.next == undefined) {
+            var [v, newLast, _] = this.remove();
+            return [v, newLast];
+        } else {
+            console.error("this node __must__ be the last node in the list");
+        }
+    }
+}
+
+// Test for removeLast
+// Create a list A, B, C
+var a = new DNode("A");
+var b = a.append("B");
+var c = b.append("C");
+
+var [cValue, newLast] = c.removeLast();
+assert(cValue == "C");
+assert(b == newLast);
+assert(newLast.next == undefined);
+
+var [bValue, newLast] = newLast.removeLast();
+assert(bValue == "B");
+assert(a == newLast);
+assert(newLast.next == undefined);
+
+var [aValue, newLast] = newLast.removeLast();
+assert(aValue == "A");
+assert(newLast == undefined);
+
+```
+
+The algorithmic performance of `removeLast(...)` is *O(1)*.
+
