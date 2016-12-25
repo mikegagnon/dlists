@@ -189,8 +189,8 @@ class DNode {
 // Create a list A, B, C
 
 var a = new DNode("A");
-var b = a.insertAfter("B");
-var c = b.insertAfter("C");
+var b = a.append("B");
+var c = b.append("C");
 
 assert(a.value == "A");
 assert(a.prev == undefined);
