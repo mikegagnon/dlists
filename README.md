@@ -9,6 +9,7 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 ## Contents
 
 - [Lecture 1. DNode](#lec1)
+- [Lecture 1. `append(...)`](#lec2)
 
 ## <a name="lec1">Lecture 1. DNode</a>
 
@@ -84,3 +85,6 @@ assert(c.value == "C");
 assert(c.prev == b);
 assert(c.next == undefined);
 ```
+
+The algorithmic performance of `append(...)` is *O(1)*.
+
