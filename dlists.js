@@ -98,6 +98,35 @@ class DNode {
         return [this.value, this.prev, this.next];
     }
 
+    // Removes the first node from the list.
+    //
+    // this node __must__ be the first node in the list
+    //
+    // Returns [v, head], where v is the value of the removed node, and
+    // head is a reference for the new head node
+    removeFirst() {
+        if (this.prev == undefined) {
+            var [v, _, newHead] = this.remove();
+            return [v, newHead];
+        } else {
+            console.error("this node __must__ be the first node in the list");
+        }
+    }
+
+    // Removes the last node from the list.
+    //
+    // this node __must__ be the last node in the list
+    //
+    // Returns [v, last], where v is the value of the removed node, and
+    // last is a reference for the new last node
+    removeLast() {
+        if (this.next == undefined) {
+            var [v, newLast, _] = this.remove();
+            return [v, newLast];
+        } else {
+            console.error("this node __must__ be the last node in the list");
+        }
+    }
 
 }
 
@@ -246,9 +275,6 @@ assert(v == "A");
 assert(prev == undefined);
 assert(next == undefined);
 
-
-
-/*
 // Test for removeFirst
 // Create a list A, B, C
 var a = new DNode("A");
@@ -275,17 +301,16 @@ var a = new DNode("A");
 var b = a.append("B");
 var c = b.append("C");
 
-var [aValue, newHead] = c.removeLast();
-assert(aValue == "A");
-assert(b == newHead);
-assert(newHead.prev == undefined);
-
-var [bValue, newHead] = newHead.removeFirst();
-assert(bValue == "B");
-assert(c == newHead);
-assert(newHead.prev == undefined);
-
-var [cValue, newHead] = newHead.removeFirst();
+var [cValue, newLast] = c.removeLast();
 assert(cValue == "C");
-assert(newHead == undefined);
-*/
+assert(b == newLast);
+assert(newLast.next == undefined);
+
+var [bValue, newLast] = newLast.removeLast();
+assert(bValue == "B");
+assert(a == newLast);
+assert(newLast.next == undefined);
+
+var [aValue, newLast] = newLast.removeLast();
+assert(aValue == "A");
+assert(newLast == undefined);
