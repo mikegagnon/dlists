@@ -11,6 +11,7 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 - [Lecture 1. DNode](#lec1)
 - [Lecture 2. `insertAfter(...)`](#lec2)
 - [Lecture 3. `insertBefore(...)`](#lec3)
+- [Lecture 4. `append(...)`](#lec4)
 
 ## <a name="lec1">Lecture 1. DNode</a>
 
@@ -162,3 +163,44 @@ assert(a.next == undefined);
 
 The algorithmic performance of `insertBefore(...)` is *O(1)*.
 
+## <a name="lec4">Lecture 4. `append(...)`</a>
+
+```js
+class DNode {
+    
+    ...
+    
+    // Creates a new node to hold value, then appends the new node to 
+    // the end of the list.
+    //
+    // this node __must__ be the last node in the list
+    // 
+    // Returns a reference to the new node
+    append(value) {
+        if (this.next == undefined) {
+            return this.insertAfter(value);
+        } else {
+            console.error("this node __must__ be the last node in the list");
+        }
+    }
+}
+
+// Test for append
+// Create a list A, B, C
+
+var a = new DNode("A");
+var b = a.insertAfter("B");
+var c = b.insertAfter("C");
+
+assert(a.value == "A");
+assert(a.prev == undefined);
+assert(a.next == b);
+
+assert(b.value == "B");
+assert(b.prev == a);
+assert(b.next == c);
+
+assert(c.value == "C");
+assert(c.prev == b);
+assert(c.next == undefined);
+```
