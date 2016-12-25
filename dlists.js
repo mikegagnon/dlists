@@ -65,6 +65,20 @@ class DNode {
             console.error("this node __must__ be the last node in the list");
         }
     }
+    
+    // Creates a new node to hold value, then prepend the new node to 
+    // the head of the list.
+    //
+    // this node __must__ be the first node in the list
+    // 
+    // Returns a reference to the new node
+    prepend(value) {
+        if (this.prev == undefined) {
+            return this.insertBefore(value);
+        } else {
+            console.error("this node __must__ be the last node in the list");
+        }
+    }
 
 }
 
@@ -126,7 +140,6 @@ assert(a.next == undefined);
 
 // Test for append
 // Create a list A, B, C
-
 var a = new DNode("A");
 var b = a.append("B");
 var c = b.append("C");
@@ -143,7 +156,23 @@ assert(c.value == "C");
 assert(c.prev == b);
 assert(c.next == undefined);
 
+// Test for prepend
+// Create a list C, B, A
+var a = new DNode("A");
+var b = a.prepend("B");
+var c = b.prepend("C");
 
+assert(c.value == "C");
+assert(c.prev == undefined);
+assert(c.next == b);
+
+assert(b.value == "B");
+assert(b.prev == c);
+assert(b.next == a);
+
+assert(a.value == "A");
+assert(a.prev == b);
+assert(a.next == undefined);
 
 
 
