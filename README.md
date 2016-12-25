@@ -12,6 +12,9 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 - [Lecture 2. `insertAfter(...)`](#lec2)
 - [Lecture 3. `insertBefore(...)`](#lec3)
 - [Lecture 4. `append(...)`](#lec4)
+- [Lecture 5. `prepend(...)`](#lec5)
+- [Lecture 6. `removeFirst(...)`](#lec6)
+
 
 ## <a name="lec1">Lecture 1. DNode</a>
 
@@ -187,7 +190,6 @@ class DNode {
 
 // Test for append
 // Create a list A, B, C
-
 var a = new DNode("A");
 var b = a.append("B");
 var c = b.append("C");
@@ -204,3 +206,49 @@ assert(c.value == "C");
 assert(c.prev == b);
 assert(c.next == undefined);
 ```
+
+The algorithmic performance of `append(...)` is *O(1)*.
+
+
+## <a name="lec5">Lecture 5. `prepend(...)`</a>
+
+```js
+class DNode {
+    
+    ...
+    
+    // Creates a new node to hold value, then prepend the new node to 
+    // the head of the list.
+    //
+    // this node __must__ be the first node in the list
+    // 
+    // Returns a reference to the new node
+    prepend(value) {
+        if (this.prev == undefined) {
+            return this.insertBefore(value);
+        } else {
+            console.error("this node __must__ be the last node in the list");
+        }
+    }
+}
+
+// Test for prepend
+// Create a list C, B, A
+var a = new DNode("A");
+var b = a.prepend("B");
+var c = b.prepend("C");
+
+assert(c.value == "C");
+assert(c.prev == undefined);
+assert(c.next == b);
+
+assert(b.value == "B");
+assert(b.prev == c);
+assert(b.next == a);
+
+assert(a.value == "A");
+assert(a.prev == b);
+assert(a.next == undefined);
+```
+
+The algorithmic performance of `prepend(...)` is *O(1)*.
