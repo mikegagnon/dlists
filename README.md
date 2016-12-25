@@ -227,7 +227,7 @@ class DNode {
         if (this.prev == undefined) {
             return this.insertBefore(value);
         } else {
-            console.error("this node __must__ be the last node in the list");
+            console.error("this node __must__ be the first node in the list");
         }
     }
 }
