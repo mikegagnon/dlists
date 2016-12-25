@@ -14,6 +14,7 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 - [Lecture 4. `append(...)`](#lec4)
 - [Lecture 5. `prepend(...)`](#lec5)
 - [Lecture 6. `removeFirst(...)`](#lec6)
+- [Lecture 7. `removeLast(...)`](#lec7)
 
 
 ## <a name="lec1">Lecture 1. DNode</a>
@@ -273,7 +274,7 @@ class DNode {
             }
             return [this.value, this.next];
         } else {
-            console.error("this node __must__ be the last node in the list");
+            console.error("this node __must__ be the first node in the list");
         }      
     }
 }
