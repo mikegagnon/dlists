@@ -344,21 +344,19 @@ class DNode {
     
     ...
 
-    // Deletes the first node in this list.
+    // Removes the first node from the list.
     //
     // this node __must__ be the first node in the list
     //
-    // Returns [v, head] where v is the value that was removed, and head
-    // is a reference to the new head (possibly undefined).
+    // Returns [v, head], where v is the value of the removed node, and
+    // head is a reference for the new head node
     removeFirst() {
         if (this.prev == undefined) {
-            if (this.next != undefined) {
-                this.next.prev = undefined;
-            }
-            return [this.value, this.next];
+            var [v, _, newHead] = this.remove();
+            return [v, newHead];
         } else {
             console.error("this node __must__ be the first node in the list");
-        }      
+        }
     }
 }
 
