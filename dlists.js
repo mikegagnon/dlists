@@ -128,6 +128,52 @@ class DNode {
         }
     }
 
+    // Deletes the first node with the specified value.
+    // It is an error if value is not found in the list.
+    //
+    // Returns [head, last], where
+    //   head is the head of the new list
+    //   last is the last node of the new list
+    //
+    // Arguments:
+    //   prev is a reference to the previous node. If there is no previous node,
+    //   then set prev to undefined.
+    //   head is a reference to the first node in the list.
+    removeValue(value, head, last) {
+
+        // Base Case 1: When we have found the sought-after value
+        if (this.value == value) {
+        
+            var newHead = head;
+            var newLast = last;
+
+            if (this.prev == undefined) {
+                newHead = this.next;
+            } else {
+                this.prev.next = this.next;
+            }
+
+            if (this.next == undefined) {
+                newLast = this.prev;
+            } else {
+                this.next.prev = this.prev;
+            }
+
+            return [newHead, newLast];
+        }
+        
+        // Base Case 2: When we have reached the end of the list
+        else if (this.next == undefined) {
+            console.error("The list did not contain the value we're looking for");
+        }
+        
+        // Recursive case
+        else {
+            return this.next.removeValue(value, head, last);
+        }
+
+    }
+
 }
 
 // Test for insertAfter
@@ -314,3 +360,33 @@ assert(newLast.next == undefined);
 var [aValue, newLast] = newLast.removeLast();
 assert(aValue == "A");
 assert(newLast == undefined);
+
+// Test for removeValue(...)
+var [a,b,c] = newList();
+
+// remove first
+var [newHead, newLast] = a.removeValue("A", a, c);
+assert(newHead == b);
+assert(newLast == c);
+assert(b.prev == undefined);
+
+// remove last
+var [newHead, newLast] = b.removeValue("C", b, c);
+assert(newHead == b);
+assert(newLast == b);
+assert(b.prev == undefined);
+
+// remove middle
+var [a,b,c] = newList();
+
+var [newHead, newLast] = a.removeValue("B", a, c);
+assert(newHead == a);
+assert(newLast == c);
+assert(a.next == c);
+assert(c.prev == a);
+
+
+
+
+
+
