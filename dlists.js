@@ -51,6 +51,21 @@ class DNode {
 
         return newNode;
     }
+
+    // Creates a new node to hold value, then appends the new node to 
+    // the end of the list.
+    //
+    // this node __must__ be the last node in the list
+    // 
+    // Returns a reference to the new node
+    append(value) {
+        if (this.next == undefined) {
+            return this.insertAfter(value);
+        } else {
+            console.error("this node __must__ be the last node in the list");
+        }
+    }
+
 }
 
 // Test for insertAfter
@@ -108,6 +123,27 @@ assert(e.next == a);
 assert(a.value == "A");
 assert(a.prev == e);
 assert(a.next == undefined);
+
+// Test for append
+// Create a list A, B, C
+
+var a = new DNode("A");
+var b = a.append("B");
+var c = b.append("C");
+
+assert(a.value == "A");
+assert(a.prev == undefined);
+assert(a.next == b);
+
+assert(b.value == "B");
+assert(b.prev == a);
+assert(b.next == c);
+
+assert(c.value == "C");
+assert(c.prev == b);
+assert(c.next == undefined);
+
+
 
 
 
