@@ -12,20 +12,24 @@ class DNode {
         this.next = undefined;
     }
 
-    // Creates a new node to hold value, and appends the new node to the end
-    // of this list.
+    // Creates a new node to hold value, then inserts the new node after
+    // this node.
     //
-    // last is a reference to the last node in the list 
-    //
-    // Returns a reference to the new last node
-    append(value, last) {
+    // Returns a reference to the new node
+    insertAfter(value) {
         
-        var newLast = new DNode(value);
+        var newNode = new DNode(value);
 
-        newLast.prev = last;
-        last.next = newLast;
+        newNode.next = this.next;
+        newNode.prev = this;
 
-        return newLast;
+        if (newNode.next != undefined) {
+            newNode.next.prev = newNode;
+        }
+
+        this.next = newNode;
+
+        return newNode;
     }
 
     prepend(value, head) {
@@ -39,8 +43,41 @@ class DNode {
     }
 }
 
-// Test for append
+// Create list: A -> D -> B -> E-> C
 var a = new DNode("A");
+var b = a.insertAfter("B");
+var c = b.insertAfter("C");
+var d = a.insertAfter("D");
+var e = b.insertAfter("E");
+
+assert(a.value == "A");
+assert(a.prev == undefined);
+assert(a.next == d);
+
+assert(d.value == "D");
+assert(d.prev == a);
+assert(d.next == b);
+
+assert(b.value == "B");
+assert(b.prev == d);
+assert(b.next == e);
+
+assert(e.value == "E");
+assert(e.prev == b);
+assert(e.next == c);
+
+assert(c.value == "C");
+assert(c.prev == e);
+assert(c.next == undefined);
+
+
+
+
+
+
+
+// Test for append
+/*var a = new DNode("A");
 var b = a.append("B", a);
 var c = a.append("C", b);
 
@@ -54,7 +91,7 @@ assert(b.next == c);
 
 assert(c.value == "C");
 assert(c.prev == b);
-assert(c.next == undefined);
+assert(c.next == undefined);*/
 
 // Test for prepend
 
