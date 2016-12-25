@@ -298,3 +298,6 @@ var [cValue, newHead] = newHead.removeFirst();
 assert(cValue == "C");
 assert(newHead == undefined);
 ```
+
+The algorithmic performance of `removeFirst(...)` is *O(1)*.
+
