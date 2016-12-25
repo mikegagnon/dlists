@@ -72,16 +72,6 @@ class DNode {
 
         return newNode;
     }
-
-    prepend(value, head) {
-
-        var newHead = new DNode(value);
-
-        newHead.next = head;
-        head.prev = newHead;
-
-        return newHead;
-    }
 }
 
 // Create list: A, D, B, E, C
