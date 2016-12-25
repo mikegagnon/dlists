@@ -252,3 +252,49 @@ assert(a.next == undefined);
 ```
 
 The algorithmic performance of `prepend(...)` is *O(1)*.
+
+## <a name="lec6">Lecture 6. `removeFirst(...)`</a>
+
+```js
+class DNode {
+    
+    ...
+
+    // Deletes the first node in this list.
+    //
+    // this node __must__ be the first node in the list
+    //
+    // Returns [v, head] where v is the value that was removed, and head
+    // is a reference to the new head (possibly undefined).
+    removeFirst() {
+        if (this.prev == undefined) {
+            if (this.next != undefined) {
+                this.next.prev = undefined;
+            }
+            return [this.value, this.next];
+        } else {
+            console.error("this node __must__ be the last node in the list");
+        }      
+    }
+}
+
+// Test for removeFirst
+// Create a list A, B, C
+var a = new DNode("A");
+var b = a.append("B");
+var c = b.append("C");
+
+var [aValue, newHead] = a.removeFirst();
+assert(aValue == "A");
+assert(b == newHead);
+assert(newHead.prev == undefined);
+
+var [bValue, newHead] = newHead.removeFirst();
+assert(bValue == "B");
+assert(c == newHead);
+assert(newHead.prev == undefined);
+
+var [cValue, newHead] = newHead.removeFirst();
+assert(cValue == "C");
+assert(newHead == undefined);
+```
