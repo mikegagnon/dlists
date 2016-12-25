@@ -16,6 +16,8 @@ Doubly linked lists are like linked lists (aka singly linked lists), except ever
 
 <img src="dnodes.png">
 
+### `dlists.js`
+
 Here's the class definition for DNode:
 
 ```js
@@ -26,4 +28,16 @@ class DNode {
         this.next = undefined;
     }
 }
+```
+
+### `index.html`
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Doubly Linked Lists</title>
+    <script src="dlists.js"></script>
+  </head>
+</html>
 ```
