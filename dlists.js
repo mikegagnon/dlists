@@ -32,18 +32,29 @@ class DNode {
         return newNode;
     }
 
-    prepend(value, head) {
+    // Creates a new node to hold value, then inserts the new node before
+    // this node.
+    //
+    // Returns a reference to the new node
+    insertBefore(value) {
 
-        var newHead = new DNode(value);
+        var newNode = new DNode(value);
 
-        newHead.next = head;
-        head.prev = newHead;
+        newNode.next = this;
+        newNode.prev = this.prev;
 
-        return newHead;
+        if (newNode.prev != undefined) {
+            newNode.prev.next = newNode;
+        }
+
+        this.prev = newNode;
+
+        return newNode;
     }
 }
 
-// Create list: A -> D -> B -> E-> C
+// Test for insertAfter
+// Create list: A, D, B, E, C
 var a = new DNode("A");
 var b = a.insertAfter("B");
 var c = b.insertAfter("C");
@@ -70,44 +81,34 @@ assert(c.value == "C");
 assert(c.prev == e);
 assert(c.next == undefined);
 
-
-
-
-
-
-
-// Test for append
-/*var a = new DNode("A");
-var b = a.append("B", a);
-var c = a.append("C", b);
-
-assert(a.value == "A");
-assert(a.prev == undefined);
-assert(a.next == b);
-
-assert(b.value == "B");
-assert(b.prev == a);
-assert(b.next == c);
-
-assert(c.value == "C");
-assert(c.prev == b);
-assert(c.next == undefined);*/
-
-// Test for prepend
-
+// Test for insertBefore
+// Create list: C, D, B, E, A
 var a = new DNode("A");
-var b = a.prepend("B", a);
-var c = b.prepend("C", b);
+var b = a.insertBefore("B");
+var c = b.insertBefore("C");
+var d = b.insertBefore("D");
+var e = a.insertBefore("E");
 
 assert(c.value == "C");
 assert(c.prev == undefined);
-assert(c.next == b);
+assert(c.next == d);
+
+assert(d.value == "D");
+assert(d.prev == c);
+assert(d.next == b);
 
 assert(b.value == "B");
-assert(b.prev == c);
-assert(b.next == a);
+assert(b.prev == d);
+assert(b.next == e);
+
+assert(e.value == "E");
+assert(e.prev == b);
+assert(e.next == a);
 
 assert(a.value == "A");
-assert(a.prev == b);
+assert(a.prev == e);
 assert(a.next == undefined);
+
+
+
 
