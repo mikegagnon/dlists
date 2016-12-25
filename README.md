@@ -104,46 +104,61 @@ assert(c.next == undefined);
 
 The algorithmic performance of `insertAfter(...)` is *O(1)*.
 
-## <a name="lec3">Lecture 3. `prepend(...)`</a>
+## <a name="lec3">Lecture 3. `insertBefore(...)`</a>
 
 ```js
 class DNode {
     
     ...
     
-    // Creates a new node to hold value, and appends the new node to the end
-    // of this list.
+    // Creates a new node to hold value, then inserts the new node before
+    // this node.
     //
-    // last is a reference to the last node in the list 
-    //
-    // Returns a reference to the new last node
-    append(value, last) {
-        
-        var newLast = new DNode(value);
+    // Returns a reference to the new node
+    insertBefore(value) {
 
-        newLast.prev = last;
-        last.next = newLast;
+        var newNode = new DNode(value);
 
-        return newLast;
+        newNode.next = this;
+        newNode.prev = this.prev;
+
+        if (newNode.prev != undefined) {
+            newNode.prev.next = newNode;
+        }
+
+        this.prev = newNode;
+
+        return newNode;
     }
 }
 
+// Create list: C, D, B, E, A
 var a = new DNode("A");
-var b = a.append("B", a);
-var c = a.append("C", b);
-
-assert(a.value == "A");
-assert(a.prev == undefined);
-assert(a.next == b);
-
-assert(b.value == "B");
-assert(b.prev == a);
-assert(b.next == c);
+var b = a.insertBefore("B");
+var c = b.insertBefore("C");
+var d = b.insertBefore("D");
+var e = a.insertBefore("E");
 
 assert(c.value == "C");
-assert(c.prev == b);
-assert(c.next == undefined);
+assert(c.prev == undefined);
+assert(c.next == d);
+
+assert(d.value == "D");
+assert(d.prev == c);
+assert(d.next == b);
+
+assert(b.value == "B");
+assert(b.prev == d);
+assert(b.next == e);
+
+assert(e.value == "E");
+assert(e.prev == b);
+assert(e.next == a);
+
+assert(a.value == "A");
+assert(a.prev == e);
+assert(a.next == undefined);
 ```
 
-The algorithmic performance of `append(...)` is *O(1)*.
+The algorithmic performance of `insertBefore(...)` is *O(1)*.
 
