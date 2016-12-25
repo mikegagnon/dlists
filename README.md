@@ -1,4 +1,4 @@
-# Doubly Linked Listst
+# Doubly Linked Lists
 
 A mini-course in doubly linked lists in JS for novice programmers.
 
