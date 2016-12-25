@@ -9,7 +9,8 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 ## Contents
 
 - [Lecture 1. DNode](#lec1)
-- [Lecture 1. `append(...)`](#lec2)
+- [Lecture 2. `insertAfter(...)`](#lec2)
+- [Lecture 3. `insertBefore(...)`](#lec3)
 
 ## <a name="lec1">Lecture 1. DNode</a>
 
@@ -17,7 +18,7 @@ Doubly linked lists are like linked lists (aka singly linked lists), except ever
 
 <img src="dnodes.png">
 
-The clients keep track of `head` and `last` themselves.
+The clients must keep track of `head` and `last` themselves.
 
 ### `dlists.js`
 
@@ -45,7 +46,75 @@ class DNode {
 </html>
 ```
 
-## <a name="lec2">Lecture 2. `append(...)`</a>
+## <a name="lec2">Lecture 2. `insertAfter(...)`</a>
+
+```js
+class DNode {
+    
+    ...
+
+    // Creates a new node to hold value, then inserts the new node after
+    // this node.
+    //
+    // Returns a reference to the new node
+    insertAfter(value) {
+        
+        var newNode = new DNode(value);
+
+        newNode.next = this.next;
+        newNode.prev = this;
+
+        if (newNode.next != undefined) {
+            newNode.next.prev = newNode;
+        }
+
+        this.next = newNode;
+
+        return newNode;
+    }
+
+    prepend(value, head) {
+
+        var newHead = new DNode(value);
+
+        newHead.next = head;
+        head.prev = newHead;
+
+        return newHead;
+    }
+}
+
+// Create list: A, D, B, E, C
+var a = new DNode("A");
+var b = a.insertAfter("B");
+var c = b.insertAfter("C");
+var d = a.insertAfter("D");
+var e = b.insertAfter("E");
+
+assert(a.value == "A");
+assert(a.prev == undefined);
+assert(a.next == d);
+
+assert(d.value == "D");
+assert(d.prev == a);
+assert(d.next == b);
+
+assert(b.value == "B");
+assert(b.prev == d);
+assert(b.next == e);
+
+assert(e.value == "E");
+assert(e.prev == b);
+assert(e.next == c);
+
+assert(c.value == "C");
+assert(c.prev == e);
+assert(c.next == undefined);
+```
+
+The algorithmic performance of `insertAfter(...)` is *O(1)*.
+
+## <a name="lec3">Lecture 3. `prepend(...)`</a>
 
 ```js
 class DNode {
