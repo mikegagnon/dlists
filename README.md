@@ -13,9 +13,9 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 - [Lecture 3. `insertBefore(...)`](#lec3)
 - [Lecture 4. `append(...)`](#lec4)
 - [Lecture 5. `prepend(...)`](#lec5)
-- [Lecture 6. `removeFirst(...)`](#lec6)
-- [Lecture 7. `removeLast(...)`](#lec7)
-
+- [Lecture 6. `remove(...)`](#lec6)
+- [Lecture 7. `removeFirst(...)`](#lec7)
+- [Lecture 8. `removeLast(...)`](#lec8)
 
 ## <a name="lec1">Lecture 1. DNode</a>
 
@@ -254,7 +254,90 @@ assert(a.next == undefined);
 
 The algorithmic performance of `prepend(...)` is *O(1)*.
 
-## <a name="lec6">Lecture 6. `removeFirst(...)`</a>
+## <a name="lec6">Lecture 6. `remove(...)`</a>
+
+```js
+
+class DNode {
+    
+    ...
+    
+    // Removes this node from the list.
+    // 
+    // Returns [v, prev, next] where:
+    //      - v is the value that was removed
+    //      - prev is this node's previous node
+    //      - next is this node's next node
+    remove() {
+        if (this.prev != undefined) {
+            this.prev.next = this.next;
+        }
+
+        if (this.next != undefined) {
+            this.next.prev = this.prev;
+        }
+
+        return [this.value, this.prev, this.next];
+    }
+}
+
+// Test for remove
+// Create a list A, B, C
+function newList() {
+    var a = new DNode("A");
+    var b = a.append("B");
+    var c = b.append("C");
+    return [a, b, c];
+}
+
+// Remove A, then B, then C
+var [a,b,c] = newList();
+
+var [v, prev, next] = a.remove();
+assert(v == "A");
+assert(prev == undefined);
+assert(next == b);
+
+var [v, prev, next] = b.remove();
+assert(v == "B");
+assert(prev == undefined);
+assert(next == c);
+
+var [v, prev, next] = c.remove();
+assert(v == "C");
+assert(prev == undefined);
+assert(next == undefined);
+
+// Remove B
+var [a,b,c] = newList();
+
+var [v, prev, next] = b.remove();
+assert(v == "B");
+assert(prev == a);
+assert(next == c);
+
+// Remove C, then B, then A
+var [a,b,c] = newList();
+
+var [v, prev, next] = c.remove();
+assert(v == "C");
+assert(prev == b);
+assert(next == undefined);
+
+var [v, prev, next] = b.remove();
+assert(v == "B");
+assert(prev == a);
+assert(next == undefined);
+
+var [v, prev, next] = a.remove();
+assert(v == "A");
+assert(prev == undefined);
+assert(next == undefined);
+```
+
+The algorithmic performance of `remove(...)` is *O(1)*.
+
+## <a name="lec7">Lecture 7. `removeFirst(...)`</a>
 
 ```js
 class DNode {
