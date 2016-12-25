@@ -15,3 +15,15 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 Doubly linked lists are like linked lists (aka singly linked lists), except every node has a `prev` reference and a `next` reference.
 
 <img src="dnodes.png">
+
+Here's the class definition for DNode:
+
+```js
+class DNode {
+    constructor(value) {
+        this.value = value;
+        this.prev = undefined;
+        this.next = undefined;
+    }
+}
+```
