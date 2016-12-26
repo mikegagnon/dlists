@@ -645,7 +645,7 @@ The algorithmic performance of `sort(...)` is *O(N^2)*.
 
 ## <a name="lec12">Lecture 12. The queue data structure</a>
 
-A queue is a fundmental and useful data structure. It is based on a linked list (in our implementation we use a doubly linked list).
+A queue is a simple, fundmental, and useful data structure. It is often implemented using a linked list (in our implementation we use a doubly linked list).
 
 A queue is an object that has three methods:
 
@@ -682,7 +682,7 @@ A queue is the natural datastructure for reprenting a line of people waiting to 
 - You step in line via the `enqueue` method
 - When it is your turn, you step out of the line via the `dequeue` method
 
-For this reason a queue is said to be a FIFO datastructure, which stands for First In, First Out. The first person to step in line, is the first person to step out of line.
+A queue is said to be a FIFO data structure, which stands for First In, First Out. The first person to step in line is also the first person to step out of line.
 
 In a future mini course, and also in a future project, we will use queues to accomplish amazing feats!
 
