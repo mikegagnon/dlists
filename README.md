@@ -760,3 +760,16 @@ var value = q.dequeue();
 assert(value == 3)
 assert(q.isEmpty());
 ```
+
+### Efficiency
+
+Queues are efficient.
+
+The algorithmic performance of `enqueue(...)` is *O(1)*.
+
+The algorithmic performance of `dequeue(...)` is *O(1)*.
+
+The algorithmic performance of `isEmpty(...)` is *O(1)*.
+
+
+
