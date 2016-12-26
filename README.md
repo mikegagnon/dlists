@@ -18,6 +18,7 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 - [Lecture 8. `removeLast(...)`](#lec8)
 - [Lecture 9. `removeValue(...)`](#lec9)
 - [Lecture 10. `findSmallest(...)`](#lec10)
+- [Lecture 11. `sort(...)`](#lec11)
 
 ## <a name="lec1">Lecture 1. DNode</a>
 
@@ -555,3 +556,81 @@ assert(two.findSmallest() == "1");
 ```
 
 The algorithmic performance of `findSmallest(...)` is *O(N)*.
+
+## <a name="lec11">Lecture 11. `sort(...)`</a>
+
+```js
+class DNode {
+    
+    ...
+
+    // Sorts the list in ascending order.
+    //
+    // Arguments: 
+    //   head, a reference to the first node in the list
+    //   last, a reference to the last node in the list
+    //
+    // Returns the head of the new list.
+    sort(head, last) {
+
+        // Base case
+        if (this.next == undefined) {
+            return this;
+        }
+
+        // Recursive case
+        else {
+            var smallest = this.findSmallest();
+            var [sublist, _] = this.removeValue(smallest, head, last);
+            var sortedSublist = sublist.sort();
+            return sortedSublist.prepend(smallest);
+        }
+    }
+}
+
+// Test sort()
+var one = new DNode(1);
+var two = one.append(2);
+var three = two.append(3);
+var sorted = one.sort(one, three);
+
+aNode = sorted;
+bNode = aNode.next;
+cNode = bNode.next;
+
+assert(aNode.value == 1);
+assert(bNode.value == 2);
+assert(cNode.value == 3);
+assert(cNode.next == undefined);
+
+
+var two = new DNode(2);
+var one = two.append(1);
+var three = one.append(3);
+var sorted = two.sort(two, three);
+
+aNode = sorted;
+bNode = aNode.next;
+cNode = bNode.next;
+
+assert(aNode.value == 1);
+assert(bNode.value == 2);
+assert(cNode.value == 3);
+assert(cNode.next == undefined);
+
+
+var two = new DNode(2);
+var three = two.append(3);
+var one = three.append(1);
+var sorted = two.sort(two, one);
+
+aNode = sorted;
+bNode = aNode.next;
+cNode = bNode.next;
+
+assert(aNode.value == 1);
+assert(bNode.value == 2);
+assert(cNode.value == 3);
+```
+
+The algorithmic performance of `sort(...)` is *O(N^2)*.
