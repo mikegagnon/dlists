@@ -136,30 +136,23 @@ class DNode {
     //   last is the last node of the new list
     //
     // Arguments:
-    //   prev is a reference to the previous node. If there is no previous node,
-    //   then set prev to undefined.
-    //   head is a reference to the first node in the list.
+    //   TODO
     removeValue(value, head, last) {
 
         // Base Case 1: When we have found the sought-after value
         if (this.value == value) {
-        
-            var newHead = head;
-            var newLast = last;
 
             if (this.prev == undefined) {
-                newHead = this.next;
-            } else {
-                this.prev.next = this.next;
+                head = this.next;
             }
 
             if (this.next == undefined) {
-                newLast = this.prev;
-            } else {
-                this.next.prev = this.prev;
+                last = this.prev;
             }
 
-            return [newHead, newLast];
+            this.remove();
+
+            return [head, last];
         }
         
         // Base Case 2: When we have reached the end of the list
