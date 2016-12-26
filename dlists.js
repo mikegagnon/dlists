@@ -187,7 +187,6 @@ class DNode {
                 return smallest;
             }
         }
-
     }
 
 }
