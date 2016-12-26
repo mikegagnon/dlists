@@ -17,6 +17,7 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 - [Lecture 7. `removeFirst(...)`](#lec7)
 - [Lecture 8. `removeLast(...)`](#lec8)
 - [Lecture 9. `removeValue(...)`](#lec9)
+- [Lecture 10. `findSmallest(...)`](#lec10)
 
 ## <a name="lec1">Lecture 1. DNode</a>
 
@@ -507,3 +508,50 @@ assert(c.prev == a);
 ```
 
 The algorithmic performance of `removeValue(...)` is *O(N)*.
+
+## <a name="lec10">Lecture 10. `findSmallest(...)`</a>
+
+```js
+class DNode {
+    
+    ...
+    
+    // Finds and returns the smallest value in this list
+    findSmallest() {
+
+        // Base Case: When we have reached the end of the list
+        if (this.next == undefined) {
+            return this.value;
+        }
+        
+        // Recursive case
+        else {
+            var smallest = this.next.findSmallest();
+
+            if (this.value < smallest) {
+                return this.value;
+            } else {
+                return smallest;
+            }
+        }
+    }
+ }
+ 
+ // Test findSmallest(...)
+var one = new DNode("1");
+var two = one.append("2");
+var three = two.append("3");
+assert(one.findSmallest() == "1");
+
+var two = new DNode("2");
+var one = two.append("1");
+var three = one.append("3");
+assert(two.findSmallest() == "1");
+
+var two = new DNode("2");
+var three = two.append("3");
+var one = three.append("1");
+assert(two.findSmallest() == "1");
+```
+
+The algorithmic performance of `findSmallest(...)` is *O(N)*.
