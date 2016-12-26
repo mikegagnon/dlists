@@ -16,6 +16,7 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 - [Lecture 6. `remove(...)`](#lec6)
 - [Lecture 7. `removeFirst(...)`](#lec7)
 - [Lecture 8. `removeLast(...)`](#lec8)
+- [Lecture 9. `removeValue(...)`](#lec9)
 
 ## <a name="lec1">Lecture 1. DNode</a>
 
