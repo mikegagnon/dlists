@@ -831,7 +831,7 @@ stack, is the first book to be removed from the stack.
 
 ### Stack implementation
 
-Here is a complete queue implementation.
+Here is a complete stack implementation.
 
 ```js
 class Stack {
