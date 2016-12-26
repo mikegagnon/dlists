@@ -430,3 +430,79 @@ assert(newLast == undefined);
 
 The algorithmic performance of `removeLast(...)` is *O(1)*.
 
+## <a name="lec9">Lecture 9. `removeValue(...)`</a>
+
+```js
+class DNode {
+    
+    ...
+
+    // Deletes the first node with the specified value.
+    // It is an error if value is not found in the list.
+    //
+    // Returns [head, last], where
+    //   head is the head of the new list
+    //   last is the last node of the new list
+    //
+    // Arguments:
+    //   value, the value to search for
+    //   head, a reference to the first node in the list
+    //   last, a reference to the last node in the list
+    removeValue(value, head, last) {
+
+        // Base Case 1: When we have found the sought-after value
+        if (this.value == value) {
+
+            if (this.prev == undefined) {
+                head = this.next;
+            }
+
+            if (this.next == undefined) {
+                last = this.prev;
+            }
+
+            this.remove();
+
+            return [head, last];
+        }
+        
+        // Base Case 2: When we have reached the end of the list
+        else if (this.next == undefined) {
+            console.error("The list did not contain the value we're looking for");
+        }
+        
+        // Recursive case
+        else {
+            return this.next.removeValue(value, head, last);
+        }
+
+    }
+}
+
+// Test for removeValue(...)
+var [a,b,c] = newList();
+
+// remove first
+var [newHead, newLast] = a.removeValue("A", a, c);
+assert(newHead == b);
+assert(newLast == c);
+assert(b.prev == undefined);
+
+// remove last
+var [newHead, newLast] = b.removeValue("C", b, c);
+assert(newHead == b);
+assert(newLast == b);
+assert(b.prev == undefined);
+
+// remove middle
+var [a,b,c] = newList();
+
+var [newHead, newLast] = a.removeValue("B", a, c);
+assert(newHead == a);
+assert(newLast == c);
+assert(a.next == c);
+assert(c.prev == a);
+
+```
+
+The algorithmic performance of `removeValue(...)` is *O(N)*.
