@@ -248,6 +248,40 @@ class Queue {
 
 }
 
+class Stack {
+    constructor() {
+        this.head = undefined;
+    }
+
+    push(value) {
+        if (this.head == undefined) {
+            this.head = new DNode(value);
+        } else {
+            this.head = this.head.prepend(value);
+        }
+    }
+
+    pop() {
+        if (this.head == undefined) {
+            console.error("Cannot pop an empty stack");
+        } else {
+            var [value, newHead] = this.head.removeFirst();
+            this.head = newHead;
+
+            return value;
+        }
+    }
+
+    isEmpty() {
+        return this.head == undefined;
+    }
+
+}
+
+
+
+
+
 // Test for insertAfter
 // Create list: A, D, B, E, C
 var a = new DNode("A");
@@ -556,3 +590,57 @@ assert(q.isEmpty());
 
 
 
+// Test for Stack
+var stack = new Stack();
+assert(stack.isEmpty());
+stack.push(1);
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1);
+assert(stack.isEmpty());
+
+stack.push(1);
+assert(!stack.isEmpty());
+stack.push(2);
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 2)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1)
+assert(stack.isEmpty());
+
+stack.push(1);
+assert(!stack.isEmpty());
+stack.push(2);
+assert(!stack.isEmpty());
+stack.push(3);
+var value = stack.pop();
+assert(value == 3)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 2)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1)
+assert(stack.isEmpty());
+
+stack.push(1);
+assert(!stack.isEmpty());
+stack.push(2);
+assert(!stack.isEmpty());
+stack.push(3);
+var value = stack.pop();
+assert(value == 3)
+assert(!stack.isEmpty());
+stack.push(4);
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 4)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 2)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1)
+assert(stack.isEmpty());
