@@ -8,17 +8,23 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 
 ## Contents
 
-- [Lecture 1. DNode](#lec1)
-- [Lecture 2. `insertAfter(...)`](#lec2)
-- [Lecture 3. `insertBefore(...)`](#lec3)
-- [Lecture 4. `append(...)`](#lec4)
-- [Lecture 5. `prepend(...)`](#lec5)
-- [Lecture 6. `remove(...)`](#lec6)
-- [Lecture 7. `removeFirst(...)`](#lec7)
-- [Lecture 8. `removeLast(...)`](#lec8)
-- [Lecture 9. `removeValue(...)`](#lec9)
-- [Lecture 10. `findSmallest(...)`](#lec10)
-- [Lecture 11. `sort(...)`](#lec11)
+- Part 1. Methods for doubly linked lists
+    - [Lecture 1. DNode](#lec1)
+    - [Lecture 2. `insertAfter(...)`](#lec2)
+    - [Lecture 3. `insertBefore(...)`](#lec3)
+    - [Lecture 4. `append(...)`](#lec4)
+    - [Lecture 5. `prepend(...)`](#lec5)
+    - [Lecture 6. `remove(...)`](#lec6)
+    - [Lecture 7. `removeFirst(...)`](#lec7)
+    - [Lecture 8. `removeLast(...)`](#lec8)
+    - [Lecture 9. `removeValue(...)`](#lec9)
+    - [Lecture 10. `findSmallest(...)`](#lec10)
+    - [Lecture 11. `sort(...)`](#lec11)
+- Part 2. Queues and stacks
+    - [Lecture 12. The queue datastructure](#lec12)
+    - [Lecture 13. The stack datastructure](#lec13)
+
+## Part 1. Methods for doubly linked lists
 
 ## <a name="lec1">Lecture 1. DNode</a>
 
@@ -634,3 +640,118 @@ assert(cNode.value == 3);
 ```
 
 The algorithmic performance of `sort(...)` is *O(N^2)*.
+
+## Part 2. Queues and stacks
+
+## <a name="lec12">Lecture 12. The queue data structure</a>
+
+A queue is a fundmental and useful data structure. It is based on a linked list (in our implementation we use a doubly linked list).
+
+A queue is an object that has three methods:
+
+- `queue.enqueue(value)` appends `value` to queue's list
+- `queue.dequeue()` removes the first `value` from the queue's list, and returns it
+- `isEmpty()` returns true if, and only if, the queue's list is empty
+
+For example:
+
+```
+var q = new Queue();
+
+q.enqueue(1);
+q.enqueue(2);
+q.enqueue(3);
+
+var value = q.dequeue();
+assert(value == 1);
+
+var value = q.dequeue();
+assert(value == 2);
+
+var value = q.dequeue();
+assert(value == 3);
+```
+
+A queue is the natural datastructure for reprenting a line of people waiting to get on a bus:
+
+- You step in line via the `enqueue` method
+- When it is your turn, you step out of the line via the `dequeue` method
+
+For this reason a queue is said to be a FIFO datastructure, which stands for First In, First Out. The first person to step in line, is the first person to step out of line.
+
+In a future mini course, and also in a future project, we will use queues to accomplish amazing feats!
+
+### Queue implementation
+
+Here is a complete queue implementation.
+
+```js
+class Queue {
+    constructor() {
+        this.head = undefined;
+        this.last = undefined;
+    }
+
+    enqueue(value) {
+        if (this.head == undefined) {
+            this.head = this.tail = new DNode(value);
+        } else {
+            this.tail = this.tail.append(value);
+        }
+    }
+
+    dequeue() {
+        if (this.head == undefined) {
+            console.error("Cannot dequeue an empty queue");
+        } else {
+            var [value, newHead] = this.head.removeFirst();
+            this.head = newHead;
+
+            if (this.head == undefined) {
+                this.tail = undefined;
+            }
+
+            return value;
+        }
+    }
+
+    isEmpty() {
+        return this.head == undefined;
+    }
+}
+
+// Test for Queue
+var q = new Queue();
+assert(q.isEmpty());
+q.enqueue(1);
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 1);
+assert(q.isEmpty());
+
+q.enqueue(1);
+assert(!q.isEmpty());
+q.enqueue(2);
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 1)
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 2)
+assert(q.isEmpty());
+
+q.enqueue(1);
+assert(!q.isEmpty());
+q.enqueue(2);
+assert(!q.isEmpty());
+q.enqueue(3);
+var value = q.dequeue();
+assert(value == 1)
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 2)
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 3)
+assert(q.isEmpty());
+```
