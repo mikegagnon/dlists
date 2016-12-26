@@ -930,5 +930,14 @@ The algorithmic performance of `pop(...)` is *O(1)*.
 
 The algorithmic performance of `isEmpty(...)` is *O(1)*.
 
+## <a name="summary">Summary of algorithmic performance</a>
 
-
+| Function      | Singly linked list | Doubly linked List |
+| ------------- |--------------------|--------------------|
+| `append`      | *O(N)*             | *O(1)*             |
+| `prepend`     | *O(1)*             | *O(1)*             |
+| `removeFirst` | *O(1)*             | *O(1)*             |
+| `removeLast`  | *O(N)*             | *O(1)*             |
+| `removeValue` | *O(N)*             | *O(N)*             |
+| `findSmallest`| *O(N)*             | *O(N)*             |
+| `sort`        | *O(N^2)*           | *O(N^2)*           |
