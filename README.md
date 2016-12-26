@@ -8,16 +8,24 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
 
 ## Contents
 
-- [Lecture 1. DNode](#lec1)
-- [Lecture 2. `insertAfter(...)`](#lec2)
-- [Lecture 3. `insertBefore(...)`](#lec3)
-- [Lecture 4. `append(...)`](#lec4)
-- [Lecture 5. `prepend(...)`](#lec5)
-- [Lecture 6. `remove(...)`](#lec6)
-- [Lecture 7. `removeFirst(...)`](#lec7)
-- [Lecture 8. `removeLast(...)`](#lec8)
-- [Lecture 9. `removeValue(...)`](#lec9)
-- [Lecture 10. `findSmallest(...)`](#lec10)
+- Part 1. Methods for doubly linked lists
+    - [Lecture 1. DNode](#lec1)
+    - [Lecture 2. `insertAfter(...)`](#lec2)
+    - [Lecture 3. `insertBefore(...)`](#lec3)
+    - [Lecture 4. `append(...)`](#lec4)
+        - Comparison to singly linked list
+    - [Lecture 5. `prepend(...)`](#lec5)
+    - [Lecture 6. `remove(...)`](#lec6)
+    - [Lecture 7. `removeFirst(...)`](#lec7)
+    - [Lecture 8. `removeLast(...)`](#lec8)
+    - [Lecture 9. `removeValue(...)`](#lec9)
+    - [Lecture 10. `findSmallest(...)`](#lec10)
+    - [Lecture 11. `sort(...)`](#lec11)
+- Part 2. Queues and stacks
+    - [Lecture 12. The queue datastructure](#lec12)
+    - [Lecture 13. The stack datastructure](#lec13)
+
+## Part 1. Methods for doubly linked lists
 
 ## <a name="lec1">Lecture 1. DNode</a>
 
@@ -212,6 +220,16 @@ assert(c.next == undefined);
 
 The algorithmic performance of `append(...)` is *O(1)*.
 
+### Comparison to singly linked list
+
+The `append(...)` method for a singly linked list is *O(N)*.
+
+The `append(...)` method for a doubly linked list is *O(1)*.
+
+This dramatic difference in performance is the primary motivator for using
+doubly linked lists instead of singly linked lists --- at least for our purposes.
+
+In Part 2, `append(...)` turns out to be an important method that is used by the `Queue` class.
 
 ## <a name="lec5">Lecture 5. `prepend(...)`</a>
 
@@ -555,3 +573,362 @@ assert(two.findSmallest() == "1");
 ```
 
 The algorithmic performance of `findSmallest(...)` is *O(N)*.
+
+## <a name="lec11">Lecture 11. `sort(...)`</a>
+
+```js
+class DNode {
+    
+    ...
+
+    // Sorts the list in ascending order.
+    //
+    // Arguments: 
+    //   head, a reference to the first node in the list
+    //   last, a reference to the last node in the list
+    //
+    // Returns the head of the new list.
+    sort(head, last) {
+
+        // Base case
+        if (this.next == undefined) {
+            return this;
+        }
+
+        // Recursive case
+        else {
+            var smallest = this.findSmallest();
+            var [sublist, _] = this.removeValue(smallest, head, last);
+            var sortedSublist = sublist.sort();
+            return sortedSublist.prepend(smallest);
+        }
+    }
+}
+
+// Test sort()
+var one = new DNode(1);
+var two = one.append(2);
+var three = two.append(3);
+var sorted = one.sort(one, three);
+
+aNode = sorted;
+bNode = aNode.next;
+cNode = bNode.next;
+
+assert(aNode.value == 1);
+assert(bNode.value == 2);
+assert(cNode.value == 3);
+assert(cNode.next == undefined);
+
+
+var two = new DNode(2);
+var one = two.append(1);
+var three = one.append(3);
+var sorted = two.sort(two, three);
+
+aNode = sorted;
+bNode = aNode.next;
+cNode = bNode.next;
+
+assert(aNode.value == 1);
+assert(bNode.value == 2);
+assert(cNode.value == 3);
+assert(cNode.next == undefined);
+
+
+var two = new DNode(2);
+var three = two.append(3);
+var one = three.append(1);
+var sorted = two.sort(two, one);
+
+aNode = sorted;
+bNode = aNode.next;
+cNode = bNode.next;
+
+assert(aNode.value == 1);
+assert(bNode.value == 2);
+assert(cNode.value == 3);
+```
+
+The algorithmic performance of `sort(...)` is *O(N^2)*.
+
+## Part 2. Queues and stacks
+
+## <a name="lec12">Lecture 12. The queue data structure</a>
+
+A queue is a simple and useful data structure. It is often implemented using a linked list (in our implementation we use a doubly linked list).
+
+A queue is an object that has three methods:
+
+- `queue.enqueue(value)` appends `value` to queue's list
+- `queue.dequeue()` removes the first `value` from the queue's list, and returns it
+- `isEmpty()` returns true if, and only if, the queue's list is empty
+
+For example:
+
+```
+var q = new Queue();
+
+q.enqueue(1);
+q.enqueue(2);
+q.enqueue(3);
+
+var value = q.dequeue();
+assert(value == 1);
+
+q.enqueue(4);
+
+var value = q.dequeue();
+assert(value == 2);
+
+var value = q.dequeue();
+assert(value == 3);
+
+var value = q.dequeue();
+assert(value == 4);
+```
+
+A queue is the natural datastructure for representing a line of people waiting to get on a bus:
+
+- You step in line via the `enqueue` method
+- When it is your turn, you step out of the line via the `dequeue` method
+
+A queue is said to be a FIFO data structure, which stands for First In, First Out. The first person to step in line is also the first person to step out of line.
+
+In a future mini course, and also in a future project, we will use queues to accomplish amazing feats!
+
+### Queue implementation
+
+Here is a complete queue implementation.
+
+```js
+class Queue {
+    constructor() {
+        this.head = undefined;
+        this.last = undefined;
+    }
+
+    enqueue(value) {
+        if (this.head == undefined) {
+            this.head = this.tail = new DNode(value);
+        } else {
+            this.tail = this.tail.append(value);
+        }
+    }
+
+    dequeue() {
+        if (this.head == undefined) {
+            console.error("Cannot dequeue an empty queue");
+        } else {
+            var [value, newHead] = this.head.removeFirst();
+            this.head = newHead;
+
+            if (this.head == undefined) {
+                this.tail = undefined;
+            }
+
+            return value;
+        }
+    }
+
+    isEmpty() {
+        return this.head == undefined;
+    }
+}
+
+// Test for Queue
+var q = new Queue();
+assert(q.isEmpty());
+q.enqueue(1);
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 1);
+assert(q.isEmpty());
+
+q.enqueue(1);
+assert(!q.isEmpty());
+q.enqueue(2);
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 1)
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 2)
+assert(q.isEmpty());
+
+q.enqueue(1);
+assert(!q.isEmpty());
+q.enqueue(2);
+assert(!q.isEmpty());
+q.enqueue(3);
+var value = q.dequeue();
+assert(value == 1)
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 2)
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 3)
+assert(q.isEmpty());
+```
+
+### Efficiency
+
+Queues are efficient.
+
+The algorithmic performance of `enqueue(...)` is *O(1)*.
+
+The algorithmic performance of `dequeue(...)` is *O(1)*.
+
+The algorithmic performance of `isEmpty(...)` is *O(1)*.
+
+
+
+
+## <a name="lec13">Lecture 13. The stack data structure</a>
+
+A stack is a simple and useful data structure. It is often implemented using a linked list (in our implementation we use a doubly linked list).
+
+Queues and stacks are complementary. 
+
+A stack is an object that has three methods:
+
+- `stack.push(value)` prepends `value` to stack's list
+- `stack.pop()` removes the first `value` from the stack's list, and returns it
+- `isEmpty()` returns true if, and only if, the stack's list is empty
+
+For example:
+
+```
+var stack = new Stack();
+
+stack.push(1);
+stack.push(2);
+stack.push(3);
+
+var value = stack.pop();
+assert(value == 3);
+
+stack.push(4);
+
+var value = stack.pop();
+assert(value == 4);
+
+var value = stack.pop();
+assert(value == 2);
+
+var value = stack.pop();
+assert(value == 1);
+```
+
+A stack is the natural datastructure for representing a stack of books on your desk.
+
+- You add a book to the stack by plopping it on top of the stack
+- You retrieve a book from the stack by taking off the top book from the stack.
+
+A stack is said to be a LIFO data structure, which stands for Last In, First Out. The last book added to the 
+stack, is the first book to be removed from the stack.
+
+### Stack implementation
+
+Here is a complete stack implementation.
+
+```js
+class Stack {
+    constructor() {
+        this.head = undefined;
+    }
+
+    push(value) {
+        if (this.head == undefined) {
+            this.head = new DNode(value);
+        } else {
+            this.head = this.head.prepend(value);
+        }
+    }
+
+    pop() {
+        if (this.head == undefined) {
+            console.error("Cannot pop an empty stack");
+        } else {
+            var [value, newHead] = this.head.removeFirst();
+            this.head = newHead;
+
+            return value;
+        }
+    }
+
+    isEmpty() {
+        return this.head == undefined;
+    }
+
+}
+
+// Test for Stack
+var stack = new Stack();
+assert(stack.isEmpty());
+stack.push(1);
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1);
+assert(stack.isEmpty());
+
+stack.push(1);
+assert(!stack.isEmpty());
+stack.push(2);
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 2)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1)
+assert(stack.isEmpty());
+
+stack.push(1);
+assert(!stack.isEmpty());
+stack.push(2);
+assert(!stack.isEmpty());
+stack.push(3);
+var value = stack.pop();
+assert(value == 3)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 2)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1)
+assert(stack.isEmpty());
+
+stack.push(1);
+assert(!stack.isEmpty());
+stack.push(2);
+assert(!stack.isEmpty());
+stack.push(3);
+var value = stack.pop();
+assert(value == 3)
+assert(!stack.isEmpty());
+stack.push(4);
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 4)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 2)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1)
+assert(stack.isEmpty());
+```
+
+### Efficiency
+
+Stacks are efficient.
+
+The algorithmic performance of `push(...)` is *O(1)*.
+
+The algorithmic performance of `pop(...)` is *O(1)*.
+
+The algorithmic performance of `isEmpty(...)` is *O(1)*.
+
+
+
