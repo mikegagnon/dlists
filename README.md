@@ -13,6 +13,7 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
     - [Lecture 2. `insertAfter(...)`](#lec2)
     - [Lecture 3. `insertBefore(...)`](#lec3)
     - [Lecture 4. `append(...)`](#lec4)
+        - Comparison to singly linked list
     - [Lecture 5. `prepend(...)`](#lec5)
     - [Lecture 6. `remove(...)`](#lec6)
     - [Lecture 7. `removeFirst(...)`](#lec7)
@@ -219,6 +220,16 @@ assert(c.next == undefined);
 
 The algorithmic performance of `append(...)` is *O(1)*.
 
+### Comparison to singly linked list
+
+The `append(...)` method for a singly linked list is *O(N)*.
+
+The `append(...)` method for a doubly linked list is *O(1)*.
+
+This dramatic difference in performance is the primary motivator for using
+doubly linked lists instead of singly linked lists --- at least for our purposes.
+
+In Part 2, `append(...)` turns out to be an important method that is used by the `Queue` class.
 
 ## <a name="lec5">Lecture 5. `prepend(...)`</a>
 
