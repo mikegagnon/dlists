@@ -656,7 +656,7 @@ The algorithmic performance of `sort(...)` is *O(N^2)*.
 
 ## <a name="lec12">Lecture 12. The queue data structure</a>
 
-A queue is a simple, fundmental, and useful data structure. It is often implemented using a linked list (in our implementation we use a doubly linked list).
+A queue is a simple and useful data structure. It is often implemented using a linked list (in our implementation we use a doubly linked list).
 
 A queue is an object that has three methods:
 
@@ -688,7 +688,7 @@ var value = q.dequeue();
 assert(value == 4);
 ```
 
-A queue is the natural datastructure for reprenting a line of people waiting to get on a bus:
+A queue is the natural datastructure for representing a line of people waiting to get on a bus:
 
 - You step in line via the `enqueue` method
 - When it is your turn, you step out of the line via the `dequeue` method
@@ -779,6 +779,154 @@ Queues are efficient.
 The algorithmic performance of `enqueue(...)` is *O(1)*.
 
 The algorithmic performance of `dequeue(...)` is *O(1)*.
+
+The algorithmic performance of `isEmpty(...)` is *O(1)*.
+
+
+
+
+## <a name="lec13">Lecture 13. The stack data structure</a>
+
+A stack is a simple and useful data structure. It is often implemented using a linked list (in our implementation we use a doubly linked list).
+
+Queues and stacks are complementary. 
+
+A stack is an object that has three methods:
+
+- `stack.push(value)` prepends `value` to stack's list
+- `stack.pop()` removes the first `value` from the stack's list, and returns it
+- `isEmpty()` returns true if, and only if, the stack's list is empty
+
+For example:
+
+```
+var stack = new Stack();
+
+stack.push(1);
+stack.push(2);
+stack.push(3);
+
+var value = stack.pop();
+assert(value == 3);
+
+stack.push(4);
+
+var value = stack.pop();
+assert(value == 4);
+
+var value = stack.pop();
+assert(value == 2);
+
+var value = stack.pop();
+assert(value == 1);
+```
+
+A stack is the natural datastructure for representing a stack of books on your desk.
+
+- You add a book to the stack by plopping it on top of the stack
+- You retrieve a book from the stack by taking off the top book from the stack.
+
+A stack is said to be a LIFO data structure, which stands for Last In, First Out. The last book added to the 
+stack, is the first book to be removed from the stack.
+
+### Stack implementation
+
+Here is a complete queue implementation.
+
+```js
+class Stack {
+    constructor() {
+        this.head = undefined;
+    }
+
+    push(value) {
+        if (this.head == undefined) {
+            this.head = new DNode(value);
+        } else {
+            this.head = this.head.prepend(value);
+        }
+    }
+
+    pop() {
+        if (this.head == undefined) {
+            console.error("Cannot pop an empty stack");
+        } else {
+            var [value, newHead] = this.head.removeFirst();
+            this.head = newHead;
+
+            return value;
+        }
+    }
+
+    isEmpty() {
+        return this.head == undefined;
+    }
+
+}
+
+// Test for Stack
+var stack = new Stack();
+assert(stack.isEmpty());
+stack.push(1);
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1);
+assert(stack.isEmpty());
+
+stack.push(1);
+assert(!stack.isEmpty());
+stack.push(2);
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 2)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1)
+assert(stack.isEmpty());
+
+stack.push(1);
+assert(!stack.isEmpty());
+stack.push(2);
+assert(!stack.isEmpty());
+stack.push(3);
+var value = stack.pop();
+assert(value == 3)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 2)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1)
+assert(stack.isEmpty());
+
+stack.push(1);
+assert(!stack.isEmpty());
+stack.push(2);
+assert(!stack.isEmpty());
+stack.push(3);
+var value = stack.pop();
+assert(value == 3)
+assert(!stack.isEmpty());
+stack.push(4);
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 4)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 2)
+assert(!stack.isEmpty());
+var value = stack.pop();
+assert(value == 1)
+assert(stack.isEmpty());
+```
+
+### Efficiency
+
+Stacks are efficient.
+
+The algorithmic performance of `push(...)` is *O(1)*.
+
+The algorithmic performance of `pop(...)` is *O(1)*.
 
 The algorithmic performance of `isEmpty(...)` is *O(1)*.
 
