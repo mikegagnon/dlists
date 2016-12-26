@@ -136,7 +136,9 @@ class DNode {
     //   last is the last node of the new list
     //
     // Arguments:
-    //   TODO
+    //   value, the value to search for
+    //   head, a reference to the first node in the list
+    //   last, a reference to the last node in the list
     removeValue(value, head, last) {
 
         // Base Case 1: When we have found the sought-after value
@@ -163,6 +165,27 @@ class DNode {
         // Recursive case
         else {
             return this.next.removeValue(value, head, last);
+        }
+
+    }
+
+    // Finds and returns the smallest value in this list
+    findSmallest() {
+
+        // Base Case: When we have reached the end of the list
+        if (this.next == undefined) {
+            return this.value;
+        }
+        
+        // Recursive case
+        else {
+            var smallest = this.next.findSmallest();
+
+            if (this.value < smallest) {
+                return this.value;
+            } else {
+                return smallest;
+            }
         }
 
     }
@@ -378,8 +401,20 @@ assert(newLast == c);
 assert(a.next == c);
 assert(c.prev == a);
 
+// Test findSmallest(...)
+var one = new DNode("1");
+var two = one.append("2");
+var three = two.append("3");
+assert(one.findSmallest() == "1");
 
+var two = new DNode("2");
+var one = two.append("1");
+var three = one.append("3");
+assert(two.findSmallest() == "1");
 
-
+var two = new DNode("2");
+var three = two.append("3");
+var one = three.append("1");
+assert(two.findSmallest() == "1");
 
 
