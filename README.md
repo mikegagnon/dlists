@@ -665,11 +665,16 @@ q.enqueue(3);
 var value = q.dequeue();
 assert(value == 1);
 
+q.enqueue(4);
+
 var value = q.dequeue();
 assert(value == 2);
 
 var value = q.dequeue();
 assert(value == 3);
+
+var value = q.dequeue();
+assert(value == 4);
 ```
 
 A queue is the natural datastructure for reprenting a line of people waiting to get on a bus:
