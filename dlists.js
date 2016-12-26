@@ -189,6 +189,63 @@ class DNode {
         }
     }
 
+    // Sorts the list in ascending order.
+    //
+    // Arguments: 
+    //   head, a reference to the first node in the list
+    //   last, a reference to the last node in the list
+    //
+    // Returns the head of the new list.
+    sort(head, last) {
+
+        // Base case
+        if (this.next == undefined) {
+            return this;
+        }
+
+        // Recursive case
+        else {
+            var smallest = this.findSmallest();
+            var [sublist, _] = this.removeValue(smallest, head, last);
+            var sortedSublist = sublist.sort();
+            return sortedSublist.prepend(smallest);
+        }
+    }
+}
+
+class Queue {
+    constructor() {
+        this.head = undefined;
+        this.last = undefined;
+    }
+
+    enqueue(value) {
+        if (this.head == undefined) {
+            this.head = this.tail = new DNode(value);
+        } else {
+            this.tail = this.tail.append(value);
+        }
+    }
+
+    dequeue() {
+        if (this.head == undefined) {
+            console.error("Cannot dequeue an empty queue");
+        } else {
+            var [value, newHead] = this.head.removeFirst();
+            this.head = newHead;
+
+            if (this.head == undefined) {
+                this.tail = undefined;
+            }
+
+            return value;
+        }
+    }
+
+    isEmpty() {
+        return this.head == undefined;
+    }
+
 }
 
 // Test for insertAfter
@@ -415,5 +472,87 @@ var two = new DNode("2");
 var three = two.append("3");
 var one = three.append("1");
 assert(two.findSmallest() == "1");
+
+
+
+// Test sort()
+var one = new DNode(1);
+var two = one.append(2);
+var three = two.append(3);
+var sorted = one.sort(one, three);
+
+aNode = sorted;
+bNode = aNode.next;
+cNode = bNode.next;
+
+assert(aNode.value == 1);
+assert(bNode.value == 2);
+assert(cNode.value == 3);
+assert(cNode.next == undefined);
+
+
+var two = new DNode(2);
+var one = two.append(1);
+var three = one.append(3);
+var sorted = two.sort(two, three);
+
+aNode = sorted;
+bNode = aNode.next;
+cNode = bNode.next;
+
+assert(aNode.value == 1);
+assert(bNode.value == 2);
+assert(cNode.value == 3);
+assert(cNode.next == undefined);
+
+
+var two = new DNode(2);
+var three = two.append(3);
+var one = three.append(1);
+var sorted = two.sort(two, one);
+
+aNode = sorted;
+bNode = aNode.next;
+cNode = bNode.next;
+
+assert(aNode.value == 1);
+assert(bNode.value == 2);
+assert(cNode.value == 3);
+
+// Test for Queue
+var q = new Queue();
+assert(q.isEmpty());
+q.enqueue(1);
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 1);
+assert(q.isEmpty());
+
+q.enqueue(1);
+assert(!q.isEmpty());
+q.enqueue(2);
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 1)
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 2)
+assert(q.isEmpty());
+
+q.enqueue(1);
+assert(!q.isEmpty());
+q.enqueue(2);
+assert(!q.isEmpty());
+q.enqueue(3);
+var value = q.dequeue();
+assert(value == 1)
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 2)
+assert(!q.isEmpty());
+var value = q.dequeue();
+assert(value == 3)
+assert(q.isEmpty());
+
 
 
