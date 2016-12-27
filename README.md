@@ -21,9 +21,10 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
     - [Lecture 9. `removeValue(...)`](#lec9)
     - [Lecture 10. `findSmallest(...)`](#lec10)
     - [Lecture 11. `sort(...)`](#lec11)
+    - [Lecture 12. `concat(...)`](#lec12)
 - Part 2. Queues and stacks
-    - [Lecture 12. The queue datastructure](#lec12)
-    - [Lecture 13. The stack datastructure](#lec13)
+    - [Lecture 13. The queue datastructure](#lec13)
+    - [Lecture 14. The stack datastructure](#lec14)
 
 ## Part 1. Methods for doubly linked lists
 
@@ -652,9 +653,12 @@ assert(cNode.value == 3);
 
 The algorithmic performance of `sort(...)` is *O(N^2)*.
 
+## <a name="lec12">`concat(...)`</a>
+
+
 ## Part 2. Queues and stacks
 
-## <a name="lec12">Lecture 12. The queue data structure</a>
+## <a name="lec13">Lecture 13. The queue data structure</a>
 
 A queue is a simple and useful data structure. It is often implemented using a linked list (in our implementation we use a doubly linked list).
 
@@ -785,7 +789,7 @@ The algorithmic performance of `isEmpty(...)` is *O(1)*.
 
 
 
-## <a name="lec13">Lecture 13. The stack data structure</a>
+## <a name="lec14">Lecture 14. The stack data structure</a>
 
 A stack is a simple and useful data structure. It is often implemented using a linked list (in our implementation we use a doubly linked list).
 
