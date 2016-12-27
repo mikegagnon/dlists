@@ -21,9 +21,10 @@ Mastery of [linked lists](https://github.com/mikegagnon/linked-lists/blob/master
     - [Lecture 9. `removeValue(...)`](#lec9)
     - [Lecture 10. `findSmallest(...)`](#lec10)
     - [Lecture 11. `sort(...)`](#lec11)
+    - [Lecture 12. `concat(...)`](#lec12)
 - Part 2. Queues and stacks
-    - [Lecture 12. The queue datastructure](#lec12)
-    - [Lecture 13. The stack datastructure](#lec13)
+    - [Lecture 13. The queue datastructure](#lec13)
+    - [Lecture 14. The stack datastructure](#lec14)
 
 ## Part 1. Methods for doubly linked lists
 
@@ -652,9 +653,36 @@ assert(cNode.value == 3);
 
 The algorithmic performance of `sort(...)` is *O(N^2)*.
 
+## <a name="lec12">Lecture 12. `concat(...)`</a>
+
+```js
+// Modifies this this list by concatenating secondList to this list
+//
+// Arguments: 
+//   firstLast, a reference to the last node in this list
+//   secondHead, a reference to the first node in the second list
+//
+//   firstLast and secondHead must != undefined
+concat(firstLast, secondHead) {
+    firstLast.next = secondHead;
+    secondHead.prev = firstLast;
+}
+
+var aNode = new DNode("A");
+var bNode = new DNode("B");
+aNode.concat(aNode, bNode);
+
+assert(aNode.next == bNode);
+assert(bNode.prev == aNode);
+```
+
+### Algorithmi performance
+
+`concat(...)` is *O(1)*
+
 ## Part 2. Queues and stacks
 
-## <a name="lec12">Lecture 12. The queue data structure</a>
+## <a name="lec13">Lecture 13. The queue data structure</a>
 
 A queue is a simple and useful data structure. It is often implemented using a linked list (in our implementation we use a doubly linked list).
 
@@ -785,7 +813,7 @@ The algorithmic performance of `isEmpty(...)` is *O(1)*.
 
 
 
-## <a name="lec13">Lecture 13. The stack data structure</a>
+## <a name="lec14">Lecture 14. The stack data structure</a>
 
 A stack is a simple and useful data structure. It is often implemented using a linked list (in our implementation we use a doubly linked list).
 
@@ -930,5 +958,15 @@ The algorithmic performance of `pop(...)` is *O(1)*.
 
 The algorithmic performance of `isEmpty(...)` is *O(1)*.
 
+## <a name="summary">Summary of algorithmic performance</a>
 
-
+| Function      | Singly linked list | Doubly linked List |
+| ------------- |--------------------|--------------------|
+| `append`      | *O(N)*             | *O(1)*             |
+| `prepend`     | *O(1)*             | *O(1)*             |
+| `removeFirst` | *O(1)*             | *O(1)*             |
+| `removeLast`  | *O(N)*             | *O(1)*             |
+| `removeValue` | *O(N)*             | *O(N)*             |
+| `findSmallest`| *O(N)*             | *O(N)*             |
+| `sort`        | *O(N^2)*           | *O(N^2)*           |
+| `concat`      | *O(1)*             | *O(1)*             |
