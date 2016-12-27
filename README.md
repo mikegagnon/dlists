@@ -676,7 +676,7 @@ assert(aNode.next == bNode);
 assert(bNode.prev == aNode);
 ```
 
-### Algorithmi performance
+### Algorithmic performance
 
 `concat(...)` is *O(1)*
 
