@@ -211,6 +211,18 @@ class DNode {
             return sortedSublist.prepend(smallest);
         }
     }
+
+    // Modifies this this list by concatenating secondList to this list
+    //
+    // Arguments: 
+    //   firstLast, a reference to the last node in this list
+    //   secondHead, a reference to the first node in the second list
+    //
+    //   firstLast and secondHead must != undefined
+    concat(firstLast, secondHead) {
+        firstLast.next = secondHead;
+        secondHead.prev = firstLast;
+    }
 }
 
 class Queue {
@@ -588,6 +600,13 @@ var value = q.dequeue();
 assert(value == 3)
 assert(q.isEmpty());
 
+// Test for concat
+var aNode = new DNode("A");
+var bNode = new DNode("B");
+aNode.concat(aNode, bNode);
+
+assert(aNode.next == bNode);
+assert(bNode.prev == aNode);
 
 
 // Test for Stack
